@@ -1,0 +1,54 @@
+First: <input type="text" id="first">
+Last: <input type="text" id="last">
+
+<div id="myBtn"><a href="">Click Me</a></div>
+<div id="output"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function(){
+    $('#myBtn a').click(function(e){
+      e.preventDefault();
+
+      var url = 'test.php';
+      // var url = 'https://api.myjson.com/bins/1mjba';
+
+      var person = {"fname": "John", "lname": "Smith"};
+
+      person.fname = $('#first').val();
+      person.lname = $('#last').val();
+
+      $.ajax({
+        url: url,
+        type: "POST",
+        data: person,
+        // data: {
+        //   "fname": $('#first').val(),
+        //   "lname": $('#last').val()
+        // },
+        dataType: "json",
+        success: function(data){
+          //data = JSON.parse(data);....only if its a string vaue in data....ie 'text'
+          // $.each(data, function(key, index){
+          //   console.log(data[key].email);
+          //   console.log(index.email);
+          //   console.log(index['email']);
+          //
+          //   $('#output').append("<br>" + index.email);
+          // })
+          console.log(data);
+          $('#output').append("<br>" + data.fname + " " + data.lname);
+
+        },
+        error: function(data){
+          console.log(data);
+          $('#output').append("<br>" + data.statusText);
+        }
+      })
+    })
+
+  })
+
+
+</script>
